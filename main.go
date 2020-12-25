@@ -76,6 +76,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 
 func setupRoutes() {
 	http.HandleFunc("/upload", uploadFile)
+	http.HandleFunc("/", displayStuff)
 	port := os.Getenv("PORT")
 	fmt.Println(http.ListenAndServe(port, nil))
 	fmt.Println("hello")
@@ -88,4 +89,12 @@ func main() {
 
 func FilenameWithoutExtension(fn string) string {
 	return strings.TrimSuffix(fn, path.Ext(fn))
+}
+
+func displayStuff(w http.ResponseWriter, r *http.Request) {
+	file, err := os.Open("index.html")
+	if err != nil {
+		panic(err)
+	}
+	io.Copy(w, file)
 }

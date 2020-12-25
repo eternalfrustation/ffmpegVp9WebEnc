@@ -1,2 +1,2 @@
 go build main.go -o main
-./main
+web ./main
